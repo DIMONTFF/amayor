@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/AmayorBlack"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:contentDescription="Volver"
+        android:focusable="true"
+        android:src="@drawable/botonvolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalles de la Cuenta"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/textoUsuario"
+        android:layout_width="116dp"
+        android:layout_height="30dp"
+        android:text="Usuario"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/etUsuario"
+        android:layout_width="308dp"
+        android:layout_height="53dp"
+        android:background="@drawable/camporellenar"
+        android:enabled="false"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoUsuario"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textoTelefono"
+        android:layout_width="116dp"
+        android:layout_height="30dp"
+        android:text="Teléfono"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUsuario"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/etTelefono"
+        android:layout_width="308dp"
+        android:layout_height="53dp"
+        android:background="@drawable/camporellenar"
+        android:enabled="false"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoTelefono"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textoDireccion"
+        android:layout_width="116dp"
+        android:layout_height="30dp"
+        android:text="Dirección"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTelefono"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/etDireccion"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+    android:background="@drawable/camporellenar"
+    android:enabled="false"
+    android:inputType="textMultiLine"
+    android:minLines="2"
+    android:maxLines="5"
+    android:paddingLeft="15dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:textColor="@color/white"
+    android:textSize="22dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/textoDireccion"
+    android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="400dp"
+        android:background="@drawable/botonseleccion"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Cerrar Sesión"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnLLamarSoporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="340dp"
+        android:background="@drawable/botonseleccion"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Contactar soporte"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/AmayorBlack"
+    android:padding="16dp"
+    tools:context=".FirstActivity.Fragments.Fragment_InicioCliente">
+
+    <ImageView
+        android:id="@+id/ivAccountDetails"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:contentDescription="Detalles de la cuenta"
+        android:focusable="true"
+        android:src="@drawable/iconousuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textoBienvenidoCliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="¡Bienvenido Usuario!"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp" />
+
+    <TextView
+        android:id="@+id/textoNecesitas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="¿Qué necesitas?"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoBienvenidoCliente"
+        android:layout_marginTop="24dp" />
+
+    <ImageView
+        android:id="@+id/botonIrHacerCompra"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/botonhacercompra"
+        android:contentDescription="Hacer compra"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoNecesitas"
+        android:layout_marginTop="32dp" />
+
+    <ImageView
+        android:id="@+id/botonIrOtros"
+        android:layout_width="180dp"
+        android:layout_height="190dp"
+        android:src="@drawable/botonirotros"
+        android:contentDescription="Otros"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/botonIrHacerCompra"
+        android:layout_marginTop="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/AmayorBlack"
+    android:padding="16dp"
+    tools:context=".FirstActivity.Fragments.Fragment_DetallesCuentaTienda">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:contentDescription="Volver"
+        android:focusable="true"
+        android:src="@drawable/botonvolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalles de la Cuenta"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+        android:id="@+id/textoNombreTienda"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:text="Nombre de la Tienda"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <EditText
+        android:id="@+id/etNombreTienda"
+        android:layout_width="308dp"
+        android:layout_height="53dp"
+        android:background="@drawable/camporellenar"
+        android:enabled="false"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:text="Tienda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoNombreTienda"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textoTipoTienda"
+        android:layout_width="219dp"
+        android:layout_height="31dp"
+
+        android:layout_marginTop="4dp"
+        android:text="Tipo de Tienda"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etNombreTienda" />
+
+    <EditText
+        android:id="@+id/etTipoTienda"
+        android:layout_width="308dp"
+        android:layout_height="53dp"
+        android:background="@drawable/camporellenar"
+        android:enabled="false"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:text="GENERAL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoTipoTienda"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/textoTelefono"
+        android:layout_width="139dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Teléfono"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTipoTienda" />
+
+    <EditText
+        android:id="@+id/etTelefono"
+        android:layout_width="308dp"
+        android:layout_height="53dp"
+        android:background="@drawable/camporellenar"
+        android:enabled="false"
+        android:inputType="phone"
+        android:paddingLeft="15dp"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:text="123456789"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textoTelefono"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="428dp"
+        android:background="@drawable/botonseleccion"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Cerrar Sesión"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnLLamarSoporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="368dp"
+        android:background="@drawable/botonseleccion"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Contactar soporte"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

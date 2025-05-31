@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvIdPedidoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID Pedido:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvIdPedidoValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvNombreClienteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cliente:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvNombreClienteValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvDireccionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dirección:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvDireccionValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvNombreTiendaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tienda:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvNombreTiendaValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvProductosLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Productos:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvProductosValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvImporteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importe:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvImporteValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvEstadoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvEstadoValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/AmayorGrey"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnCambiarEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Marcar como preparado"
+            android:textColor="@color/white"
+            android:background="@drawable/botonseleccion"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

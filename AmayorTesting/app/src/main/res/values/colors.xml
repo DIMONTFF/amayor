@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="AmayorBlack">#1C2120</color>
+    <color name="AmayorGrey">#737373</color>
+    <color name="AmayorAmarillo">#FEB06A</color>
+</resources>

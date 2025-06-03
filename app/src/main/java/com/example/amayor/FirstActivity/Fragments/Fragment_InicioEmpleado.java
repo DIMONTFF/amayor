@@ -30,6 +30,8 @@ public class Fragment_InicioEmpleado extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inicio_empleado, container, false);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+
         // Initialize TextViews
         TextView textoBienvenidoRepartidor = view.findViewById(R.id.textoBienvenidoRepartidor);
         TextView textoHacer = view.findViewById(R.id.textoHacer);

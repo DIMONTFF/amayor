@@ -46,6 +46,32 @@ public class Fragment_InicioSesionV1 extends Fragment {
         // Initialize SharedPreferences
         prefs = getContext().getSharedPreferences("SessionPrefs", Context.MODE_PRIVATE);
 
+        // Check if there's a saved fragment to restore
+        String savedFragment = prefs.getString("lastFragment", "");
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (!savedFragment.isEmpty() && mantenerSesionIniciada.isChecked()) {
+            switch (savedFragment) {
+                case "Fragment_InicioCliente":
+                    mainActivity.cargarFragmento(new Fragment_InicioCliente());
+                    break;
+                case "Fragment_InicioTienda":
+                    int tiendaId = prefs.getInt("loggedInTiendaId", -1);
+                    if (tiendaId != -1) {
+                        mainActivity.cargarFragmento(Fragment_InicioTienda.newInstance(tiendaId));
+                    }
+                    break;
+                case "Fragment_InicioOtro":
+                    tiendaId = prefs.getInt("loggedInTiendaId", -1);
+                    if (tiendaId != -1) {
+                        mainActivity.cargarFragmento(Fragment_InicioOtro.newInstance(tiendaId));
+                    }
+                    break;
+                case "Fragment_InicioEmpleado":
+                    mainActivity.cargarFragmento(new Fragment_InicioEmpleado());
+                    break;
+            }
+        }
+
         // Configure tipoUsuarioLogin Spinner
         String[] usuarios = getResources().getStringArray(R.array.usuarios);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.my_selected_item, usuarios);
@@ -77,7 +103,6 @@ public class Fragment_InicioSesionV1 extends Fragment {
             }
 
             DataBaseHelper dbHelper = new DataBaseHelper(getContext());
-            MainActivity mainActivity = (MainActivity) getActivity();
 
             // Check if usuario exists
             boolean usuarioExists = false;
@@ -102,7 +127,7 @@ public class Fragment_InicioSesionV1 extends Fragment {
                 return;
             }
 
-            // Validate credentials
+            // Validate credentials and save session data including last fragment
             SharedPreferences.Editor editor = prefs.edit();
             if (mantenerSesionIniciada.isChecked()) {
                 editor.putString("usuario", usuario);
@@ -110,13 +135,14 @@ public class Fragment_InicioSesionV1 extends Fragment {
             } else {
                 editor.clear();
             }
-            editor.apply();
 
             switch (tipoUsuario) {
                 case "Cliente":
                     int clienteId = dbHelper.validateCliente(usuario, contrasenia);
                     if (clienteId != -1) {
                         mainActivity.setLoggedInClienteId(clienteId);
+                        editor.putString("lastFragment", "Fragment_InicioCliente");
+                        editor.apply();
                         mainActivity.cargarFragmento(new Fragment_InicioCliente());
                         Toast.makeText(getContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                     } else {
@@ -127,10 +153,14 @@ public class Fragment_InicioSesionV1 extends Fragment {
                     Tienda tienda = dbHelper.validateTienda(usuario, contrasenia);
                     if (tienda != null) {
                         mainActivity.setLoggedInTiendaId(tienda.getIdPersona());
-                        // Load fragment based on TipoTienda
+                        editor.putInt("loggedInTiendaId", tienda.getIdPersona());
                         if (tienda.getTipoTienda() == TipoTienda.GENERAL || tienda.getTipoTienda() == TipoTienda.FARMACIA) {
+                            editor.putString("lastFragment", "Fragment_InicioTienda");
+                            editor.apply();
                             mainActivity.cargarFragmento(Fragment_InicioTienda.newInstance(tienda.getIdPersona()));
                         } else if (tienda.getTipoTienda() == TipoTienda.OTROS) {
+                            editor.putString("lastFragment", "Fragment_InicioOtro");
+                            editor.apply();
                             mainActivity.cargarFragmento(Fragment_InicioOtro.newInstance(tienda.getIdPersona()));
                         }
                         Toast.makeText(getContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
@@ -142,6 +172,8 @@ public class Fragment_InicioSesionV1 extends Fragment {
                     int repartidorId = dbHelper.validateRepartidor(usuario, contrasenia);
                     if (repartidorId != -1) {
                         mainActivity.setLoggedInRepartidorId(repartidorId);
+                        editor.putString("lastFragment", "Fragment_InicioEmpleado");
+                        editor.apply();
                         mainActivity.cargarFragmento(new Fragment_InicioEmpleado());
                         Toast.makeText(getContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                     } else {

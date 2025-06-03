@@ -16,6 +16,7 @@ import com.example.amayor.FirstActivity.Fragments.Fragment_InicioCliente;
 import com.example.amayor.FirstActivity.Fragments.Fragment_InicioEmpleado;
 import com.example.amayor.FirstActivity.Fragments.Fragment_InicioSesionV1;
 import com.example.amayor.FirstActivity.Fragments.Fragment_InicioTienda;
+import com.example.amayor.FirstActivity.Fragments.Fragment_InicioOtro;
 import com.example.amayor.Objetos.Producto;
 import com.example.amayor.R;
 import java.util.HashMap;
@@ -57,24 +58,30 @@ public class MainActivity extends AppCompatActivity implements Fragment_Carrito.
         //dbHelper.resetAutoIncrement();
         //dbHelper.insertSampleData();
 
-        // Check for saved session
+        // Check for saved session and last fragment
         if (savedInstanceState == null) {
             SharedPreferences prefs = getSharedPreferences("SessionPrefs", Context.MODE_PRIVATE);
             String userType = prefs.getString("userType", "");
             int userId = prefs.getInt("userId", -1);
+            String lastFragment = prefs.getString("lastFragment", "");
+            boolean mantenerSesion = prefs.getBoolean("mantenerSesion", false);
 
-            if (userId != -1 && !userType.isEmpty()) {
-                // Auto-navigate to the appropriate Fragment
-                switch (userType) {
-                    case "Cliente":
+            if (mantenerSesion && userId != -1 && !userType.isEmpty() && !lastFragment.isEmpty()) {
+                // Restore the last fragment based on userType and lastFragment
+                switch (lastFragment) {
+                    case "Fragment_InicioCliente":
                         loggedInClienteId = userId;
                         cargarFragmento(new Fragment_InicioCliente());
                         break;
-                    case "Tienda":
+                    case "Fragment_InicioTienda":
                         loggedInTiendaId = userId;
-                        cargarFragmento(new Fragment_InicioTienda());
+                        cargarFragmento(Fragment_InicioTienda.newInstance(userId));
                         break;
-                    case "Repartidor":
+                    case "Fragment_InicioOtro":
+                        loggedInTiendaId = userId;
+                        cargarFragmento(Fragment_InicioOtro.newInstance(userId));
+                        break;
+                    case "Fragment_InicioEmpleado":
                         loggedInRepartidorId = userId;
                         cargarFragmento(new Fragment_InicioEmpleado());
                         break;
@@ -82,13 +89,19 @@ public class MainActivity extends AppCompatActivity implements Fragment_Carrito.
                         cargarFragmento(new Fragment_InicioSesionV1());
                 }
             } else {
-                // Load login Fragment if no session exists
+                // Load login Fragment if no valid session exists
                 cargarFragmento(new Fragment_InicioSesionV1());
             }
         }
     }
 
     public void cargarFragmento(Fragment fragment) {
+        // Save the current fragment class name in SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("SessionPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("lastFragment", fragment.getClass().getSimpleName());
+        editor.apply();
+
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragmentContainerView, fragment)
@@ -111,18 +124,29 @@ public class MainActivity extends AppCompatActivity implements Fragment_Carrito.
         this.loggedInClienteId = id;
         this.loggedInTiendaId = -1;
         this.loggedInRepartidorId = -1;
+        updateUserSession("Cliente", id);
     }
 
     public void setLoggedInTiendaId(int id) {
         this.loggedInTiendaId = id;
         this.loggedInClienteId = -1;
         this.loggedInRepartidorId = -1;
+        updateUserSession("Tienda", id);
     }
 
     public void setLoggedInRepartidorId(int id) {
         this.loggedInRepartidorId = id;
         this.loggedInClienteId = -1;
         this.loggedInTiendaId = -1;
+        updateUserSession("Repartidor", id);
+    }
+
+    private void updateUserSession(String userType, int userId) {
+        SharedPreferences prefs = getSharedPreferences("SessionPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("userType", userType);
+        editor.putInt("userId", userId);
+        editor.apply();
     }
 
     public int getLoggedInClienteId() {

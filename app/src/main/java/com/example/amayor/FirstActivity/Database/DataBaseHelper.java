@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "aunclick.db";
-    private static final int DATABASE_VERSION = 3; // Updated version for schema change
+    private static final int DATABASE_VERSION = 3;
 
     // Table names
     private static final String TABLE_TIENDA = "tienda";
@@ -43,7 +43,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NOMBRE_PRODUCTO = "nombre";
     private static final String COLUMN_PRECIO = "precio";
     private static final String COLUMN_ID_TIENDA = "id_tienda";
-    private static final String COLUMN_IMAGEN = "imagen"; // New column for image
+    private static final String COLUMN_IMAGEN = "imagen";
 
     // Cliente columns
     private static final String COLUMN_USUARIO_CLIENTE = "usuario";
@@ -84,7 +84,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             COLUMN_NOMBRE_PRODUCTO + " TEXT NOT NULL, " +
             COLUMN_PRECIO + " REAL NOT NULL, " +
             COLUMN_ID_TIENDA + " INTEGER NOT NULL, " +
-            COLUMN_IMAGEN + " BLOB, " + // New column for image
+            COLUMN_IMAGEN + " BLOB, " +
             "FOREIGN KEY (" + COLUMN_ID_TIENDA + ") REFERENCES " + TABLE_TIENDA + "(" + COLUMN_ID + "));";
 
     private static final String CREATE_TABLE_CLIENTE = "CREATE TABLE " + TABLE_CLIENTE + " (" +
@@ -140,7 +140,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE " + TABLE_PRODUCTO + " ADD COLUMN " + COLUMN_IMAGEN + " BLOB");
         }
-        // Handle future upgrades here if needed
     }
 
     public void deleteAllData() {
@@ -282,9 +281,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CONTRASENIA_TIENDA, contrasenia);
         values.put(COLUMN_NOMBRE_TIENDA, nombreTienda);
         values.put(COLUMN_TIPO_TIENDA, tipoTienda.toString());
-        long id = db.insert(TABLE_TIENDA, null, values);
+        long neighbor_id = db.insert(TABLE_TIENDA, null, values);
         db.close();
-        return id;
+        return neighbor_id;
     }
 
     public long insertRepartidor(String usuario, String telefono, String contrasenia) {
@@ -296,6 +295,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long id = db.insert(TABLE_REPARTIDOR, null, values);
         db.close();
         return id;
+    }
+
+    public boolean updateCliente(int idCliente, String usuario, String telefono, String direccion) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USUARIO_CLIENTE, usuario);
+        values.put(COLUMN_NUM_TELEFONO_CLIENTE, telefono);
+        values.put(COLUMN_DIRECCION_CLIENTE, direccion);
+        int rowsAffected = db.update(TABLE_CLIENTE, values, COLUMN_ID + " = ?", new String[]{String.valueOf(idCliente)});
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean updateRepartidor(int idRepartidor, String usuario, String telefono) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USUARIO_REPARTIDOR, usuario);
+        values.put(COLUMN_NUM_TELEFONO_REPARTIDOR, telefono);
+        int rowsAffected = db.update(TABLE_REPARTIDOR, values, COLUMN_ID + " = ?", new String[]{String.valueOf(idRepartidor)});
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean updateTienda(int idTienda, String usuario, String telefono, String nombreTienda, String tipoTienda) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USUARIO_TIENDA, usuario);
+        values.put(COLUMN_NUM_TELEFONO_TIENDA, telefono);
+        values.put(COLUMN_NOMBRE_TIENDA, nombreTienda);
+        values.put(COLUMN_TIPO_TIENDA, tipoTienda);
+        int rowsAffected = db.update(TABLE_TIENDA, values, COLUMN_ID + " = ?", new String[]{String.valueOf(idTienda)});
+        db.close();
+        return rowsAffected > 0;
     }
 
     public List<Tienda> getAllTiendas() {
@@ -809,7 +841,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             tienda3.put(COLUMN_USUARIO_TIENDA, "libreriaguaymuras");
             tienda3.put(COLUMN_NUM_TELEFONO_TIENDA, "504221122");
             tienda3.put(COLUMN_CONTRASENIA_TIENDA, "bookpass1");
-            tienda3.put(COLUMN_NOMBRE_TIENDA, "Peluquería Guaymuras");
+            tienda3.put(COLUMN_NOMBRE_TIENDA, "PeluquerÃ­a Guaymuras");
             tienda3.put(COLUMN_TIPO_TIENDA, TipoTienda.OTROS.toString());
             long idTienda3 = db.insert(TABLE_TIENDA, null, tienda3);
 
@@ -818,7 +850,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             prod1.put(COLUMN_NOMBRE_PRODUCTO, "Leche Entera 1L");
             prod1.put(COLUMN_PRECIO, 1.50);
             prod1.put(COLUMN_ID_TIENDA, idTienda1);
-            prod1.put(COLUMN_IMAGEN, (byte[]) null); // Placeholder: no image
+            prod1.put(COLUMN_IMAGEN, (byte[]) null);
             long idProd1 = db.insert(TABLE_PRODUCTO, null, prod1);
 
             ContentValues prod2 = new ContentValues();
@@ -927,13 +959,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             long idRepartidor3 = db.insert(TABLE_REPARTIDOR, null, repartidor3);
 
             // Pedidos
-            // Pedido 1: Ana López from Supermercado La Colonia
+            // Pedido 1: Ana LÃ³pez from Supermercado La Colonia
             ContentValues pedido1 = new ContentValues();
             pedido1.put(COLUMN_ID_CLIENTE, idCliente1);
             pedido1.put(COLUMN_ID_TIENDA, idTienda1);
-            pedido1.put(COLUMN_NOMBRE_CLIENTE, "Ana López");
+            pedido1.put(COLUMN_NOMBRE_CLIENTE, "Ana LÃ³pez");
             pedido1.put(COLUMN_DIRECCION_PEDIDO, "Col. Kennedy, Tegucigalpa");
-            pedido1.put(COLUMN_IMPORTE, 5.50); // 2xLeche (1.50) + 1xPan (2.00)
+            pedido1.put(COLUMN_IMPORTE, 5.50);
             pedido1.put(COLUMN_ESTADO, "PREP");
             long idPedido1 = db.insert(TABLE_PEDIDO, null, pedido1);
 
@@ -949,13 +981,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             pedidoProd2.put(COLUMN_CANTIDAD, 1);
             db.insert(TABLE_PEDIDO_PRODUCTO, null, pedidoProd2);
 
-            // Pedido 2: Carlos Martínez from Farmacia Kielsa
+            // Pedido 2: Carlos MartÃ­nez from Farmacia Kielsa
             ContentValues pedido2 = new ContentValues();
             pedido2.put(COLUMN_ID_CLIENTE, idCliente2);
             pedido2.put(COLUMN_ID_TIENDA, idTienda2);
-            pedido2.put(COLUMN_NOMBRE_CLIENTE, "Carlos Martínez");
+            pedido2.put(COLUMN_NOMBRE_CLIENTE, "Carlos MartÃ­nez");
             pedido2.put(COLUMN_DIRECCION_PEDIDO, "Barrio El Centro, San Pedro Sula");
-            pedido2.put(COLUMN_IMPORTE, 11.00); // 1xParacetamol (3.00) + 2xIbuprofeno (4.50)
+            pedido2.put(COLUMN_IMPORTE, 11.00);
             pedido2.put(COLUMN_ESTADO, "ENTREG");
             long idPedido2 = db.insert(TABLE_PEDIDO, null, pedido2);
 

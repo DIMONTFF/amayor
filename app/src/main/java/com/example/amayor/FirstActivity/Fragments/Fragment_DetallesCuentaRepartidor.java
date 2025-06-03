@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,9 @@ import com.example.amayor.R;
 public class Fragment_DetallesCuentaRepartidor extends Fragment {
 
     private static final String TAG = "DetallesCuentaRepartidor";
+    private String originalNombreUsuario, originalTelefono;
+    private EditText etNombreUsuario, etTelefono;
+    private Button btnGuardarCambios;
 
     public Fragment_DetallesCuentaRepartidor() {
         // Required empty public constructor
@@ -34,19 +39,28 @@ public class Fragment_DetallesCuentaRepartidor extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detalles_cuenta_repartidor, container, false);
 
         // Initialize UI elements
-        EditText etNombreUsuario = view.findViewById(R.id.etNombreUsuario);
-        EditText etTelefono = view.findViewById(R.id.etTelefono);
+        etNombreUsuario = view.findViewById(R.id.etNombreUsuario);
+        etTelefono = view.findViewById(R.id.etTelefono);
         ImageView ivBack = view.findViewById(R.id.ivBack);
         Button btnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
         Button btnLlamarSoporte = view.findViewById(R.id.btnLLamarSoporte);
+        btnGuardarCambios = view.findViewById(R.id.guardarCambiosRealizados);
+
+        // Make EditText fields editable
+        etNombreUsuario.setEnabled(true);
+        etTelefono.setEnabled(true);
+
+        // Initially disable the save button
+        btnGuardarCambios.setEnabled(false);
 
         // Get logged-in repartidor ID
         MainActivity activity = (MainActivity) getActivity();
-        int repartidorId = -1;
+        int repartidorId;
         if (activity != null) {
             repartidorId = activity.getLoggedInRepartidorId();
             Log.d(TAG, "onCreateView: repartidorId = " + repartidorId);
         } else {
+            repartidorId = -1;
             Log.e(TAG, "onCreateView: Activity is null");
             Toast.makeText(requireContext(), "Error al obtener actividad", Toast.LENGTH_SHORT).show();
         }
@@ -57,9 +71,9 @@ public class Fragment_DetallesCuentaRepartidor extends Fragment {
         Log.d(TAG, "onCreateView: repartidorDetails = " + (details != null ? details.toString() : "null"));
 
         // Set EditText fields with database values or defaults
-        String nombreUsuario = details != null && details.containsKey("nombre_usuario") && details.getAsString("nombre_usuario") != null
+        originalNombreUsuario = details != null && details.containsKey("nombre_usuario") && details.getAsString("nombre_usuario") != null
                 ? details.getAsString("nombre_usuario") : "Repartidor";
-        String telefono = details != null && details.containsKey("telefono") && details.getAsString("telefono") != null
+        originalTelefono = details != null && details.containsKey("telefono") && details.getAsString("telefono") != null
                 ? details.getAsString("telefono") : "No disponible";
 
         if (details == null || !details.containsKey("telefono")) {
@@ -67,8 +81,54 @@ public class Fragment_DetallesCuentaRepartidor extends Fragment {
             Toast.makeText(requireContext(), "Teléfono no disponible en la base de datos", Toast.LENGTH_SHORT).show();
         }
 
-        etNombreUsuario.setText(nombreUsuario);
-        etTelefono.setText(telefono);
+        etNombreUsuario.setText(originalNombreUsuario);
+        etTelefono.setText(originalTelefono);
+
+        // Add TextWatchers to detect changes
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean isChanged = !etNombreUsuario.getText().toString().equals(originalNombreUsuario) ||
+                        !etTelefono.getText().toString().equals(originalTelefono);
+                btnGuardarCambios.setEnabled(isChanged);
+            }
+        };
+
+        etNombreUsuario.addTextChangedListener(textWatcher);
+        etTelefono.addTextChangedListener(textWatcher);
+
+        // Save changes button
+        btnGuardarCambios.setOnClickListener(v -> {
+            String newNombreUsuario = etNombreUsuario.getText().toString().trim();
+            String newTelefono = etTelefono.getText().toString().trim();
+
+            if (newNombreUsuario.isEmpty() || newTelefono.isEmpty()) {
+                Toast.makeText(requireContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Check if the new username is already taken by another repartidor
+            if (!newNombreUsuario.equals(originalNombreUsuario) && dbHelper.usuarioExistsRepartidor(newNombreUsuario)) {
+                Toast.makeText(requireContext(), "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            boolean success = dbHelper.updateRepartidor(repartidorId, newNombreUsuario, newTelefono);
+            if (success) {
+                Toast.makeText(requireContext(), "Cambios guardados exitosamente", Toast.LENGTH_SHORT).show();
+                originalNombreUsuario = newNombreUsuario;
+                originalTelefono = newTelefono;
+                btnGuardarCambios.setEnabled(false);
+            } else {
+                Toast.makeText(requireContext(), "Error al guardar los cambios", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Back button navigation
         ivBack.setOnClickListener(v -> {
@@ -105,7 +165,7 @@ public class Fragment_DetallesCuentaRepartidor extends Fragment {
         // Support button to dial phone number
         btnLlamarSoporte.setOnClickListener(v -> {
             Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-            dialIntent.setData(Uri.parse("tel:653828228")); // Replace with actual support number
+            dialIntent.setData(Uri.parse("tel:653828228"));
             try {
                 startActivity(dialIntent);
                 Toast.makeText(requireContext(), "Abriendo marcador", Toast.LENGTH_SHORT).show();

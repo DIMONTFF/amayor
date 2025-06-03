@@ -46,32 +46,6 @@ public class Fragment_InicioSesionV1 extends Fragment {
         // Initialize SharedPreferences
         prefs = getContext().getSharedPreferences("SessionPrefs", Context.MODE_PRIVATE);
 
-        // Check if there's a saved fragment to restore
-        String savedFragment = prefs.getString("lastFragment", "");
-        MainActivity mainActivity = (MainActivity) getActivity();
-        if (!savedFragment.isEmpty() && mantenerSesionIniciada.isChecked()) {
-            switch (savedFragment) {
-                case "Fragment_InicioCliente":
-                    mainActivity.cargarFragmento(new Fragment_InicioCliente());
-                    break;
-                case "Fragment_InicioTienda":
-                    int tiendaId = prefs.getInt("loggedInTiendaId", -1);
-                    if (tiendaId != -1) {
-                        mainActivity.cargarFragmento(Fragment_InicioTienda.newInstance(tiendaId));
-                    }
-                    break;
-                case "Fragment_InicioOtro":
-                    tiendaId = prefs.getInt("loggedInTiendaId", -1);
-                    if (tiendaId != -1) {
-                        mainActivity.cargarFragmento(Fragment_InicioOtro.newInstance(tiendaId));
-                    }
-                    break;
-                case "Fragment_InicioEmpleado":
-                    mainActivity.cargarFragmento(new Fragment_InicioEmpleado());
-                    break;
-            }
-        }
-
         // Configure tipoUsuarioLogin Spinner
         String[] usuarios = getResources().getStringArray(R.array.usuarios);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.my_selected_item, usuarios);
@@ -123,7 +97,7 @@ public class Fragment_InicioSesionV1 extends Fragment {
 
             if (!usuarioExists) {
                 Toast.makeText(getContext(), "Usuario no encontrado. Por favor, regístrate.", Toast.LENGTH_SHORT).show();
-                mainActivity.cargarFragmento(new Fragment_RegistroV1());
+                ((MainActivity) getActivity()).cargarFragmento(new Fragment_RegistroV1());
                 return;
             }
 
@@ -136,6 +110,7 @@ public class Fragment_InicioSesionV1 extends Fragment {
                 editor.clear();
             }
 
+            MainActivity mainActivity = (MainActivity) getActivity();
             switch (tipoUsuario) {
                 case "Cliente":
                     int clienteId = dbHelper.validateCliente(usuario, contrasenia);

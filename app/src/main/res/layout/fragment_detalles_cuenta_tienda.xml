@@ -127,7 +127,6 @@
         android:id="@+id/btnCerrarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="428dp"
         android:background="@drawable/botonseleccion"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -136,13 +135,14 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.486" />
 
     <Button
         android:id="@+id/btnLLamarSoporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="368dp"
         android:background="@drawable/botonseleccion"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -151,6 +151,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.637" />
+
+    <Button
+        android:id="@+id/guardarCambiosRealizados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botonseleccion"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Guardar Cambios"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.562" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

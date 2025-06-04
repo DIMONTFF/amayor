@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AunClick</string>
+    <string name="app_name">amayor</string>
     <string-array name="usuarios">
         <item>Cliente</item>
         <item>Tienda</item>

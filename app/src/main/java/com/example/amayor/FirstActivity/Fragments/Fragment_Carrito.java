@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.amayor.FirstActivity.Adapters.CarritoAdapter;
@@ -125,6 +126,13 @@ public class Fragment_Carrito extends DialogFragment {
                     updateTotalPrice();
                     if (carritoUpdatedListener != null) {
                         carritoUpdatedListener.onCarritoUpdated(carrito);
+                    }
+                    FragmentManager fm = getParentFragmentManager();
+                    if (fm.getBackStackEntryCount() > 0) {
+                        fm.popBackStack();
+                        Toast.makeText(requireContext(), "Volviendo a la pantalla anterior", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "No hay fragmentos anteriores", Toast.LENGTH_SHORT).show();
                     }
                     Toast.makeText(getContext(), "Pedido creado exitosamente", Toast.LENGTH_SHORT).show();
                     // Delay dismiss to ensure UI updates

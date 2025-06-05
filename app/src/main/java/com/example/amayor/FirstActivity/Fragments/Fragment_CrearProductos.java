@@ -67,6 +67,7 @@ public class Fragment_CrearProductos extends DialogFragment {
             }
         });
 
+
         // Initialize file picker launcher
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.OpenDocument(), uri -> {
             if (uri != null) {
@@ -75,12 +76,26 @@ public class Fragment_CrearProductos extends DialogFragment {
                     requireContext().getContentResolver().takePersistableUriPermission(uri,
                             Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    imageViewProducto.setImageBitmap(bitmap);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    selectedImageBytes = stream.toByteArray();
+                    Bitmap originalBitmap = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
+
+                    // Resize Image
+                    int maxWidth = 800;
+                    int maxHeight = 800;
+                    int width = originalBitmap.getWidth();
+                    int height = originalBitmap.getHeight();
+                    float ratio = Math.min((float) maxWidth / width, (float) maxHeight / height);
+                    int finalWidth = Math.round(width * ratio);
+                    int finalHeight = Math.round(height * ratio);
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, finalWidth, finalHeight, true);
+
+                    //Show image
+                    imageViewProducto.setImageBitmap(scaledBitmap);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream); // calidad 70%
+                    selectedImageBytes = stream.toByteArray();
+
                 } catch (Exception e) {
                     Toast.makeText(requireContext(), "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();

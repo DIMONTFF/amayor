@@ -95,6 +95,12 @@ public class Fragment_RegistroV1 extends Fragment {
             if (usuario.isEmpty() || telefono.isEmpty() || password.isEmpty()) {
                 Toast.makeText(getContext(), "Por favor, complete usuario, teléfono y contraseña", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (password.length() < 6) {
+                Toast.makeText(getContext(), "Por favor, introduzca una contraseña con 6 dígitos", Toast.LENGTH_SHORT).show();
+                return;
+            }  else if (telefono.length() < 9) {
+                Toast.makeText(getContext(), "Por favor, introduzca teléfono válido", Toast.LENGTH_SHORT).show();
+                return;
             }
 
             DataBaseHelper dbHelper = new DataBaseHelper(getContext());
